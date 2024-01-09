@@ -7,7 +7,7 @@ import re
 from bs4 import BeautifulSoup
 
 
-ATLAS_URI = "mongodb+srv://naveen:Z7RHvWPN4orjL74y@edtech.qdjcop3.mongodb.net/?retryWrites=true&w=majority"
+ATLAS_URI = "ATLAS_SECRET"
 
 
 def linked_name(title):
