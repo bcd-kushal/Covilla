@@ -3,7 +3,7 @@ from pymongo.server_api import ServerApi
 
 import re
 
-ATLAS_URI = "mongodb+srv://naveen:Z7RHvWPN4orjL74y@edtech.qdjcop3.mongodb.net/?retryWrites=true&w=majority"
+ATLAS_URI = "ATLAS_SECRET"
 
 
 #==================================================================
