@@ -552,12 +552,10 @@
                                 {% csrf_token %}
                                 Comments are reviewed and must adhere to our <a
                                     href="/policy/comments/" target="_blank">comments
-                                    policy</a>.<div class="et_manage_input">
-                                    <textarea id="comment" aria-label="hp-comment"
-                                        aria-hidden="false" name="comment" autocomplete="new-password"
-                                        style="padding:0 !important;clip:rect(1px, 1px, 1px, 1px) !important;position:absolute !important;white-space:nowrap !important;height:1px !important;width:1px !important;overflow:hidden !important;"
-                                        tabindex="-1">
-                                    </textarea>
+                                    policy</a>.<div class="et_manage_input" style="margin-top: 20px;">
+                                    
+                                    
+                                        <textarea autocomplete="new-password" required="" id="comment" name="comment" placeholder="Enter your comment here" cols="45" rows="8" aria-required="true"></textarea>
                                     
                                     <label style="color: teal;">Comment</label>
                                 </div>
@@ -571,8 +569,8 @@
                                         value size="30" aria-required="true" />
                                     <label style="color: teal;">Email Address</label>
                                 </div>
-                                    <input name="blog_name" type="text" value="{{title}}" hidden />
-                                    <label style="color: teal;">Name</label>
+                                    
+                                <input name="blog_name" type="text" value="{{title}}" hidden style="display: none;"/>
                                 
                                 <p class="form-submit"><input name="submit" type="submit" id="submit"
                                         class="button primary-button inline-button" value="Submit Comment" /> <input

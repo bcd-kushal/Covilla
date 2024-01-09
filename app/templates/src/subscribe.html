@@ -39,7 +39,7 @@
                 <div class="column-container"> 
                     <div class="column blurb card accent-teal centered" style="padding: 45px 32px;">
                         <form name="et-contactform" id="et_manage_form"
-                            action="{% url 'subscribe' %}" method="post">
+                            action="" method="post">
                             {% csrf_token %}
                             <div class="et_manage_input">
                                 <input type="email" id="contact-email" placeholder="Email Address" autocomplete="off"
@@ -47,11 +47,12 @@
                                 <label style="color: teal;">Email Address</label>
                             </div>
                             <div class="et_manage_input et_filled" style="margin-top: 15px;">
-                                <select tabindex="30" id="contact-department" name="category" required>
+                                <select tabindex="30" id="contact-department" name="preference" required>
                                     <option value="all">All</option>
                                     <option value="design">Design</option>
                                     <option value="tech">Technology</option>
                                     <option value="profession">Profession</option>
+                                    <option value="daily">Daily</option>
                                     <option value="life">Life</option>
                                     <option value="community">Community</option>
                                 </select>

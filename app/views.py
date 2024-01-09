@@ -18,25 +18,22 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 from .api_read import *
-from .api_delete import *
+from .api_create import *
 
 # ================================================================================================================
 
 
 
-# @/blog/<int:id>/
+# @/blog/<str:id>/
 def blog(req,id):
     if req.method == "GET":
 
-        id = "What is SlidesAI"
-        tag = "Design"
+        id = id.replace('-',' ')
 
         blog = get_whole_blog(id)
-
         
-
         return render(req,"src/blog.html",{
-            "tab_title": "Bloggers",
+            "tab_title": f"{blog['title']}: Covilla",
 
             # blog details
             "title": blog["title"],
@@ -50,7 +47,7 @@ def blog(req,id):
 
 
             # more blogs
-            "more_blogs": get_more_blogs(tag),
+            "more_blogs": get_more_blogs(blog["tag"]),
 
 
             # recents
@@ -65,24 +62,36 @@ def blog(req,id):
 
     elif req.method == "POST":
 
+        props = {
+                    "title": "Oops, error!",
+                    "subtitle": "Your comment should have everything filled up."
+                }
+
+
         if req.POST.get("comment"):
             blog_name = req.POST.get("blog_name")
             name = req.POST.get("author")
             email = req.POST.get("email")
             comment = req.POST.get("comment")
 
-
-            print({
-                "blog_name": blog_name,
+            obj = {
                 "name": name,
                 "email": email,
                 "comment": comment
-            })
+            }
 
-            # post_comment(blog=blog_name,name=name,email=email,comment=comment)
+            result = post_comment(title=blog_name,obj=obj)
 
 
-        return render(req,"src/success.html",{})
+            if result:
+                props = {
+                    "title": "Thank You!",
+                    "subtitle": "Your comment shall prove invaluable to us!!"
+                }
+                
+
+
+        return render(req,"src/success.html",props)
 
 
     else:
@@ -147,7 +156,7 @@ def design_blogs(req):
 
             "recents": get_recent_blog_titles(),
 
-            "blogs": get_blogs(),
+            "blogs": get_blogs(type="Design"),
 
             "statistics": get_site_stats()
         })
@@ -166,7 +175,7 @@ def tech_blogs(req):
 
             "recents": get_recent_blog_titles(),
 
-            "blogs": get_blogs(),
+            "blogs": get_blogs(type="Tech"),
 
             "statistics": get_site_stats()
         })
@@ -185,7 +194,7 @@ def life_blogs(req):
 
             "recents": get_recent_blog_titles(),
 
-            "blogs": get_blogs(),
+            "blogs": get_blogs(type="Life"),
 
             "statistics": get_site_stats()
         })
@@ -204,7 +213,7 @@ def profession_blogs(req):
 
             "recents": get_recent_blog_titles(),
 
-            "blogs": get_blogs(),
+            "blogs": get_blogs(type="Profession"),
 
             "statistics": get_site_stats()
         })
@@ -226,7 +235,7 @@ def daily_blogs(req):
 
             "recents": get_recent_blog_titles(),
 
-            "blogs": get_blogs(),
+            "blogs": get_blogs(type="Daily"),
 
             "statistics": get_site_stats()
         })
@@ -248,7 +257,7 @@ def community_blogs(req):
 
             "recents": get_recent_blog_titles(),
 
-            "blogs": get_blogs(),
+            "blogs": get_blogs(type="Community"),
 
             "statistics": get_site_stats()
         })
@@ -319,6 +328,28 @@ def search(req):
 def subscribe(req):
     if req.method == "GET":
         return render(req,"src/subscribe.html",{})
+    
+    elif req.method == "POST":
+        props = {
+                    "title": "Oops, error!",
+                    "subtitle": "Your comment should have everything filled up."
+                }
+        
+        email = req.POST.get("email")
+        preference = req.POST.get("preference")
+
+        # print(f"--------------> email:{email} | preference:{preference}")
+
+        result = add_subscriber(email=email, preference=preference)
+
+        if result:
+            props = {
+                "title": result,
+                "subtitle": f"You will get updates for '{preference}' blogs on your registered email to be the first to read it!!"
+            }
+        
+        return render(req,"src/success.html",props)
+
     else:
         return send_bad_request(req)
 

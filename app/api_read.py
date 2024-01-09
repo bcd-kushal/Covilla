@@ -1,7 +1,7 @@
-from datetime import datetime, timedelta
-
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+
+import re
 
 ATLAS_URI = "mongodb+srv://naveen:Z7RHvWPN4orjL74y@edtech.qdjcop3.mongodb.net/?retryWrites=true&w=majority"
 
@@ -146,14 +146,14 @@ def get_site_stats():
 
 
 
-def get_whole_blog(id):
+def get_whole_blog(id:str):
     
     mongo_client = MongoClient(ATLAS_URI,server_api = ServerApi('1'))
     
     atlas_db = mongo_client.get_database("blogs")
     data = atlas_db.blog
 
-    blog = data.find_one({ "title": id })
+    blog = data.find_one({ "title": { "$regex": re.compile( id , re.IGNORECASE ) } })
 
     title       =   blog["title"]
     date        =   blog["date"]
