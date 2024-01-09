@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <title>Admin Login: Covilla</title>
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin_css/subscribe.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'admin_css/index.css' %}" />
+</head>
+
+<body class="contact">
+
+    <!-- HEADER SECTION ===================================== -->
+    {% include 'src/admin_utils/header.html' %}
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
+
+
+
+    <!-- EDIT FORM -->
+    <section>
+        <div class="row-container narrow">
+            <div class="row">
+                <div class="column-container">
+                    <div class="column centered">
+                        <h4 style="color: #ff4c00;">BODY EDIT FOR</h4>
+                        <h1 style="font-size: 2.7rem;">"{{blog_title}}"</h1>
+                        <p class="lead centered">Continue changing the content and we will update the same.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-container narrow contact-form" style="width: 100vw !important;">
+            <div id="contact-cards" class="row" style="padding-top: 0;">
+                <div class="column-container">
+                    <div class="column blurb accent-red centered" style="padding: 0px 32px 55px;">
+                        <form name="et-contactform" id="et_manage_form" action="/admin/edit/body/status/" method="post">
+                            {% csrf_token %}
+
+                            <!-- blog title -->
+                            <div class="et_manage_input" style="display: none;">
+                                <input type="text" id="contact-email" placeholder="Blog Title" autocomplete="off"
+                                    name="blog_title" value="{{blog_title}}" required readonly>
+                            </div>
+
+                            <!-- intro -->
+                            <div class="et_manage_input" style="margin-top: 20px;">
+                                <textarea autocomplete="new-password" required="" id="comment" name="blog_intro"
+                                    placeholder="Enter blog intro here" cols="45" rows="8" 
+                                    aria-required="true">{{intro}}</textarea>
+                                <label style="color: red;">INTRO</label>
+                            </div>
+
+
+                            <!-- body -->
+                            <div class="et_manage_input" style="margin-top: 20px;">
+                                <textarea autocomplete="new-password" required="" id="comment" name="blog_body"
+                                    placeholder="Enter blog body here" cols="45" rows="25"
+                                    aria-required="true">{{body}}</textarea>
+                                <label style="color: red;">BODY</label>
+                            </div>
+
+                            <!-- submit -->
+                            <input class="button primary-button fullwidth-button" type="submit" name="submit"
+                                id="contact-submit" value="Confirm edit" tabindex="100">
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- FOOTER SECTION ===================================== -->
+    {% include 'src/admin_utils/footer.html' %}
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
+
+
+</body>
+
+</html>
