@@ -10,6 +10,11 @@
   transition: .5s;
   user-select: none;
 }
+
+textarea{
+  resize: none;
+}
+
 .home{
     min-height: 100vh;
 }
