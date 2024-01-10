@@ -1,9 +1,10 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from site_admin.models import *
 
 import re
 
-ATLAS_URI = "ATLAS_SECRET"
+ATLAS_URI = "mongodb+srv://naveen:Z7RHvWPN4orjL74y@edtech.qdjcop3.mongodb.net/?retryWrites=true&w=majority"
 
 
 #==================================================================
@@ -29,6 +30,14 @@ def get_blogs(type:str=None):
 
 
     for blog in blogs:
+        name = blog["title"]
+        
+        
+        if thumbnails.objects.filter(title=name).exists():
+            user = thumbnails.objects.filter(title=name).first()
+            print("\n\n------------------------ IMAGE IS ----------------------------    ",user.image)
+            blog["thumbnail"] = user.image
+
         result.append({
             "title": blog["title"],
             "thumbnail": blog["thumbnail"],
@@ -65,6 +74,14 @@ def get_searched_blogs(search_word:str=None):
     for keyword in keywords:
         blogs = data.find({ "title": { "$regex": keyword, "$options": "i" } }).limit(15)
         for blog in blogs:
+            
+            name = blog["title"]
+            if thumbnails.objects.filter(title=name).exists():
+                user = thumbnails.objects.filter(title=name).first()
+                print("\n\n------------------------ IMAGE IS ----------------------------    ",user.image)
+                blog["thumbnail"] = user.image
+
+
             result.append({
                 "title": blog["title"],
                 "thumbnail": blog["thumbnail"],
@@ -163,6 +180,20 @@ def get_whole_blog(id:str):
     header      =   blog["header"]
     contents    =   blog["contents"]
     body        =   blog["body"]
+            
+
+
+    name = blog["title"]
+    if thumbnails.objects.filter(title=name).exists():
+        user = thumbnails.objects.filter(title=name).first()
+        print("\n\n------------------------ IMAGE IS ----------------------------    ",user.image)
+        blog["thumbnail"] = user.image
+
+
+    thumbnail   =   blog["thumbnail"]
+
+
+
 
     body2 = """ 
     <h2><span id="what-is-slidesai">What is SlidesAI?</span></h2>
@@ -384,6 +415,12 @@ def get_more_blogs(tag):
     more_blogs = []
 
     for blog in blogs:
+        name = blog["title"]
+        if thumbnails.objects.filter(title=name).exists():
+            user = thumbnails.objects.filter(title=name).first()
+            print("\n\n------------------------ IMAGE IS ----------------------------    ",user.image)
+            blog["thumbnail"] = user.image
+
         more_blogs.append({
             "title": blog["title"],
             "thumbnail": blog["thumbnail"],

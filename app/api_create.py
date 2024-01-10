@@ -1,7 +1,7 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-ATLAS_URI = "ATLAS_SECRET"
+ATLAS_URI = "mongodb+srv://naveen:Z7RHvWPN4orjL74y@edtech.qdjcop3.mongodb.net/?retryWrites=true&w=majority"
 
 
 #==================================================================
@@ -31,6 +31,22 @@ def post_comment(obj:dict={}, title:str=""):
             "comments": obj
         })
 
+
+
+    # update total comments in blog brief
+    data = atlas_db.blog_brief
+
+    res = data.find_one({ "title": title })
+
+    if res:
+        num = int(res["comments"]) + 1
+        data.update_one({ "title": title }, { "$set": { "comments": str(num) } })
+
+    else: 
+        data.insert_one({
+            "title": title,
+            "comments": obj
+        })
 
 
     # increase comment count by 1
