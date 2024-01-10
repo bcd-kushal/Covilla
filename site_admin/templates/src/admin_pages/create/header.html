@@ -10,6 +10,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'admin_css/subscribe.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'admin_css/index.css' %}"/>
+
+    <style>
+        #contact-password::file-selector-button{
+            background: #ff4d00;
+            color: #fff;
+            font-weight: 990;
+            font-size: .8rem;
+            outline: none;
+            border: none;
+            padding: 8px 13px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 15px;
+            margin-left: 60px;
+            /* 
+            position: relative;
+            right: 0;
+            left: 50%;
+            transform: translateX(-50%); */
+
+        }
+
+        #contact-password:hover{
+            border: none;
+            color: #000;
+        }
+    </style>
 </head>
 
 <body class="contact">
@@ -37,9 +64,9 @@
         <div class="row-container narrow contact-form">
             <div id="contact-cards" class="row">
                 <div class="column-container"> 
-                    <div class="column blurb card accent-red centered" style="padding: 45px 32px;">
+                    <div class="column blurb card accent-red centered" style="padding: 45px 32px 0;">
                         <form name="et-contactform" id="et_manage_form"
-                            action="/admin/create/add-blog/" method="post">
+                            action="/admin/create/add-blog/" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="et_manage_input">
                                 <input type="text" id="contact-email" placeholder="Blog Title" autocomplete="off"
@@ -49,10 +76,11 @@
                             
 
 
-                            <div class="et_manage_input">
-                                <input type="text" id="contact-password" placeholder="Thumbnail URL" autocomplete="off"
+                            <div class="et_manage_input" style="margin: 15px 0 25px;">
+                                <div class="" style="white-space: nowrap; margin-right: 15px; letter-spacing: 1px; color: #ff4d00; font-weight: 990; font-size: .69rem;"> THUMBNAIL IMAGE </div>
+                                <input type="file" id="contact-password" placeholder="Thumbnail Image" autocomplete="off"
                                     name="blog_thumbnail" required>
-                                <label style="color: red;">Thumbnail URL</label>
+                                    <label for="contact-password">Select Image</label>
                             </div>
 
                             
@@ -71,6 +99,7 @@
 
                             <input class="button primary-button fullwidth-button" type="submit" name="submit"
                                 id="contact-submit" value="Proceed to add body" tabindex="100">
+                                <a class="button tertiary-button accent-teal" href="/" style="position: relative;left: 50%;transform: translateX(-50%); background: transparent; width: fit-content; padding-left: 40px; padding-right: 40px;">GO BACK</a>
                         </form>
                         <br>
                     </div>

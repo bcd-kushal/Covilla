@@ -37,7 +37,7 @@
         <div class="row-container narrow contact-form">
             <div id="contact-cards" class="row">
                 <div class="column-container"> 
-                    <div class="column blurb card accent-red centered" style="padding: 45px 32px;">
+                    <div class="column blurb card accent-red centered" style="padding: 30px 32px 0px;">
                         <form name="et-contactform" id="et_manage_form"
                             action="" method="post">
                             {% csrf_token %}
@@ -55,6 +55,7 @@
 
                             <input class="button primary-button fullwidth-button" type="submit" name="submit"
                                 id="contact-submit" value="Login" tabindex="100">
+                                <a class="button tertiary-button accent-teal" href="/" style="position: relative;left: 50%;transform: translateX(-50%); background: transparent; width: fit-content; padding-left: 40px; padding-right: 40px;">GO BACK</a>
                         </form>
                         <br>
                     </div>

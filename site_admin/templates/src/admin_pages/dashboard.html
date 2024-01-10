@@ -14,18 +14,25 @@
     <style>
 
         .blog{
-            background: rgb(244, 244, 244);
+            background: rgb(251, 251, 251);
+            border: .5px solid #ff4c0040;
             display: flex;
             flex-direction: column;
             align-items: stretch;
             justify-content: space-between;
             aspect-ratio: 2.6;
-            width: 40%;
+            width: 45%;
             min-width: 300px;
             margin: 0px 24px 55px;
             border-radius: 15px;
             padding: 20px 0 0;
             overflow: hidden;
+        }
+
+        @media (max-width:1060px){
+            .blog{
+                width: 100%;
+            }
         }
 
 
@@ -91,7 +98,7 @@
             justify-content: flex-start;
             gap: 8px;
             align-items: stretch;
-            padding-left: 20px;
+            padding: 0 20px;
         }
 
         .detailsArea{
@@ -160,12 +167,12 @@
         <div class="row-container wide-width blog-index">
             <div class="row two-column small-gutters" style="display: flex;justify-content: center;">
                 {% for x in blogs %}
-                <div class="blog">
+                <div class="blog" style="cursor: pointer;" onclick="window.location.href='{{x.link}}'">
 
                     <div class="blogArea">
 
                         <div class="thumbnailBox">
-                            <img src="{{x.thumbnail}}" alt="">
+                            <img src="../../../../media/{{x.thumbnail}}" alt="">
                         </div>
     
                         <div class="textArea">
