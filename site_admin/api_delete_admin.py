@@ -2,8 +2,9 @@ from datetime import datetime, timedelta
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from .models import *
 
-ATLAS_URI = "ATLAS_SECRET"
+ATLAS_URI = "mongodb+srv://naveen:Z7RHvWPN4orjL74y@edtech.qdjcop3.mongodb.net/?retryWrites=true&w=majority"
 
 
 #==================================================================
@@ -31,21 +32,36 @@ def delete_blog(blog):
         val &= False
 
 
+    
+    # delete thumbnail from SQL
+    image = thumbnails.objects.filter(title=blog).first()
+    if image:
+        image.delete()
+
+
 
     # delete blog brief
     data = atlas_db.blog_brief
+
     result = data.delete_one({ "title": blog })
 
     if result.deleted_count == 1:
         val &= True
     else: 
         val &= False
+
 
 
 
 
     # delete comment on that blog
     data = atlas_db.comments
+    
+    # get total comments on this blog
+    comments = data.find_one({ "title": blog })
+    comments = len(comments["comments"])
+        
+
     result = data.delete_one({ "title": blog })
 
     if result.deleted_count == 1:
@@ -55,14 +71,18 @@ def delete_blog(blog):
 
 
 
+    
 
     # delete total blog count
     data = atlas_db.statistics
     result = data.find_one({ "total_blogs": { "$exists": True } })
 
+    total_comments = int(result["total_comments"])
+    total_comments -= comments
+
     new_val = int(result["total_blogs"]) - 1
 
-    data.update_one({ "total_blogs": { "$exists": True } }, { "$set": { "total_blogs": new_val } })
+    data.update_many({ "total_blogs": { "$exists": True } }, { "$set": { "total_blogs": new_val, "total_comments": total_comments } })
 
     val &= True
 
@@ -114,6 +134,15 @@ def do_comment_delete(blog:str, name:str, comment:str):
     result = data.update_one({ "title": blog }, { "$set": { "comments": new_obj } })
 
 
+
+
+    # reduce in blog_brief by 1
+    data = atlas_db.blog_brief
+    result = data.find_one({ "title": blog })
+
+    result = int(result["comments"]) - 1
+
+    result = data.update_one({ "title": blog }, { "$set": { "comments": str(result) } })
 
 
 
