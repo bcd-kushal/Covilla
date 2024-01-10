@@ -9,7 +9,7 @@ import re
 
 
 
-ATLAS_URI = "ATLAS_SECRET"
+ATLAS_URI = "mongodb+srv://naveen:Z7RHvWPN4orjL74y@edtech.qdjcop3.mongodb.net/?retryWrites=true&w=majority"
 
 
 def to_link(title):
@@ -61,7 +61,7 @@ def h2_titles(str):
 
 
     # insert id into h2 tags
-    h2_pattern = re.compile(r'<h2>')
+    h2_pattern = re.compile(r'<h2(?:\s+(?:class|id)="[^"]*")?>(.*?)</h2>', re.IGNORECASE | re.DOTALL)
 
     split_list = re.split(h2_pattern, str)
 
@@ -118,10 +118,8 @@ def h2_titles(str):
 #==================================================================
 #==================================================================
 
-def update_blog_brief(title:str, thumbnail:str, tag:str, old_title:str):
+def update_blog_brief(title:str, tag:str, old_title:str, thumbnail:str=""):
     if title=="" or title==None:
-        return False
-    if thumbnail=="" or thumbnail==None:
         return False
     if tag=="" or tag==None:
         return False

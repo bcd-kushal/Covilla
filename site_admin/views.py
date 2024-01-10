@@ -21,6 +21,7 @@ from .api_read_admin import *
 from .api_create_admin import *
 from .api_delete_admin import *
 from .api_update_admin import *
+from .models import *
 
 from app import api_read
 
@@ -56,6 +57,17 @@ def admin_login(req):
 
 
 
+
+def admin_logout(req):
+    if req.method == "GET":
+        LogoutUser(req)
+        return redirect('/admin-login/')
+    else: 
+        return send_bad_request(req)
+
+
+
+
 def error_page(req):
     if req.method == "GET":
         return render(req,"src/admin_login/admin_error.html",{})
@@ -83,7 +95,7 @@ def redirect_to_dashboard(req):
 
 
 
-
+# @/admin/dashboard/
 def dashboard(req):
     if req.method == "GET":
         return render(req,"src/admin_pages/dashboard.html",{
@@ -132,8 +144,35 @@ def create_page(req):
 def add_blog_body(req):
     if req.method == "POST":
         blog_title = req.POST.get("blog_title")
-        thumbnail = req.POST.get("blog_thumbnail")
+        thumbnail = req.FILES["blog_thumbnail"]
+        
+        if thumbnails.objects.filter(title=blog_title).exists():
+            user = thumbnails.objects.filter(title=blog_title).first()
+            user.image = thumbnail
+            user.save()
+            print("................ SUCCESS IN UPDATING")
+                
+        else: 
+            thumbnails.objects.create(
+                title = blog_title,
+                image = thumbnail
+            )
+            print("................ SUCCESS IN ADDING")
+
+
+
+        all_data = thumbnails.objects.filter(title=blog_title)
+
+        for x in all_data:
+            print("\n\n:::",x.title)
+            print(":::",x.image,"\n\n")
+
+
         tag = req.POST.get("blog_tag")
+
+
+
+        print("\n\n=======================> THUMBNAIL: ",thumbnail)
 
         return render(req,"src/admin_pages/create/body.html",{
             "blog_title": blog_title,
@@ -275,11 +314,43 @@ def edit_header(req):
 def edit_header_status(req):
     if req.method == "POST":
         blog = req.POST.get("blog_title")
-        thumbnail = req.POST.get("blog_thumbnail")
         tag = req.POST.get("blog_tag")
         old_blog = req.POST.get("old_blog_title")
 
-        result1 = update_blog_brief(title=blog,thumbnail=thumbnail,tag=tag,old_title=old_blog)
+
+        thumbnail = req.FILES["blog_thumbnail"]
+
+        if old_blog != blog:
+            thumbnails.objects.create(
+                title = blog,
+                image = thumbnail
+            )
+        else:
+            if thumbnails.objects.filter(title=blog).exists():
+                user = thumbnails.objects.filter(title=blog).first()
+                user.image = thumbnail
+                user.save()
+                print("................ SUCCESS IN UPDATING")
+
+            else: 
+                thumbnails.objects.create(
+                    title = blog,
+                    image = thumbnail
+                )
+                print("................ SUCCESS IN ADDING")
+
+
+
+        all_data = thumbnails.objects.filter(title=blog)
+
+        for x in all_data:
+            print("\n\n:::",x.title)
+            print(":::",x.image,"\n\n")
+
+
+
+
+        result1 = update_blog_brief(title=blog,thumbnail="thumbnail",tag=tag,old_title=old_blog)
         result2 = True
 
         if old_blog != blog:
@@ -303,8 +374,8 @@ def edit_header_status(req):
                 "tab_title": "Covilla Admin",
                 "title": "Header updated successfully",
                 "subtitle": "Headers are afterall, valuable at the forefront itself",
-                "back_link": "/admin/edit/",
-                "back_name": "Go to Edit page",
+                "back_link": "/admin/dashboard/",
+                "back_name": "Go to Dashboard",
                 "blog_title": blog,
                 "admin": True
             }
@@ -351,6 +422,9 @@ def edit_body_status(req):
         header = req.POST.get("blog_intro")
         body = req.POST.get("blog_body")
 
+        header = re.sub(r'<h2[^>]*>.*?</h2>', '<h2></h2>', header, flags=re.DOTALL)
+        body = re.sub(r'<h2[^>]*>.*?</h2>', '<h2></h2>', body, flags=re.DOTALL)
+
         result = update_blog_body(blog=blog,header=header,body=body)
 
         print(f"\n\n=======> BLOG: {blog}\n\n=======> HEADER: {header}\n\n=======> BODY: {body} ")
@@ -372,8 +446,8 @@ def edit_body_status(req):
                 "tab_title": "Covilla Admin",
                 "title": "Body updated successfully",
                 "subtitle": "Body makes the meat of the blog, its importatnt to keep it sparkly",
-                "back_link": "/admin/edit/",
-                "back_name": "Go to Edit page",
+                "back_link": "/admin/dashboard/",
+                "back_name": "Go to Dashboard",
                 "blog_title": blog,
                 "admin": True
             }
@@ -455,8 +529,8 @@ def blog_delete(req):
                 "tab_title": "Covilla Admin",
                 "title": "Deleted successfully",
                 "subtitle": "There's no concept of trash bin here as we don't believe in trash items",
-                "back_link": "/admin/delete/",
-                "back_name": "Go to Delete page",
+                "back_link": "/admin/dashboard/",
+                "back_name": "Go to Dashboard",
                 "blog_title": blog,
                 "admin": True
             }
@@ -562,8 +636,8 @@ def comment_delete(req):
                 "tab_title": "Covilla Admin",
                 "title": "Comment deleted",
                 "subtitle": "More comments will be added in future, no worries",
-                "back_link": "/admin/comments/",
-                "back_name": "Go to Comments page",
+                "back_link": "/admin/dashboard/",
+                "back_name": "Go to Dashboard",
                 "admin": True
             }
 
