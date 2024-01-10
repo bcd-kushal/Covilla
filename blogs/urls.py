@@ -20,7 +20,7 @@ urlpatterns = [
     path('categories/', app.categories, name='all-categories'),
     path('categories/design/', app.design_blogs, name='design-categories'),
     path('categories/tech/', app.tech_blogs, name='tech-categories'),
-    path('categories/my-life/', app.life_blogs, name='life-categories'),
+    path('categories/life/', app.life_blogs, name='life-categories'),
     path('categories/profession/', app.profession_blogs, name='profession-categories'),
     path('categories/daily/', app.daily_blogs, name='daily-categories'),
     path('categories/community/', app.community_blogs, name='community-categories'),
@@ -32,6 +32,7 @@ urlpatterns = [
     
     # ADMIN =========================
     path('admin-login/', adm.admin_login, name='admin-login'),
+    path('admin/logout/', adm.admin_logout, name='admin-logout'),
     path('error/', adm.error_page, name='login-error'),
 
     path('admin/', adm.redirect_to_dashboard, name='redirect-dashboard'),
@@ -69,3 +70,5 @@ urlpatterns = [
     # REST UNDEFINED PATTERNS
     re_path(r'^.*/$', app.send_bad_request, name='bad-route'),
 ]
+
+urlpatterns += static(settings.MEDIA_URI,document_root=settings.MEDIA_ROOT)
