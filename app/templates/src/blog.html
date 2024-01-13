@@ -506,26 +506,9 @@
                             {{header|safe}}
 
 
+                            
                             <!-- table of contents -->
-                            <div class="table"
-                                data-smooth-scroll="1" data-smooth-scroll-offset="120" style="width: 480px;max-width: 96vw;position: relative;transform: translateX(-50%);left: 50%;background: rgba(68, 121, 100, 0.05);  padding: 40px; border-radius: 20px;margin-bottom: 90px; border: .2px solid #00808030;margin-top: 90px;">
-                                <div class="contents">
-                                    <div class="lwptoc_header" style="padding-bottom: 20px;font-weight: 700;font-size: 1.3rem;">
-                                        <b class="lwptoc_title">Table Of Contents</b>
-                                    </div>
-                                    <div class="lwptoc_items lwptoc_items-visible">
-                                        <ul class="lwptoc_itemWrap">
-                                            {% for x in contents %}
-                                            <li class="lwptoc_item"> <a href="#{{x.content_link}}">
-                                                    <span class="lwptoc_item_number">{{x.number}}</span>
-                                                    <span class="lwptoc_item_label">{{x.content}}</span>
-                                                </a>
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            <br><br><br><br>
 
 
                             <!-- rest of body -->
@@ -537,6 +520,40 @@
                 </div>
             </div>
         </div>
+
+
+
+
+        <br><br>
+        <br><br>
+
+
+        {% if comments %}
+        <div class="row-container">
+            <div class="row">
+                <div class="column-container">
+                    <div class="column">
+                        <h2>Comments</h2>
+                        <div id="respond" class="comment-respond" style="display: flex; flex-direction: column; gap: 25px;">
+                            
+                            {% for x in comments %}
+                            <div class="" style="width: fit-content;padding: 32px; background: #ddf4fae9; border-radius: 10px; color: #32373c; display: flex; flex-direction: column; min-width: 300px !important; margin-right: 20vw;">
+                                <div class="title" style="font-weight: 990; font-size: 1.45rem; padding-top: 30px;">
+                                    {{x.name}}
+                                </div>
+                                <div class="comment" style="padding-top: 16px;">
+                                    {{x.comment}}
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
 
         <br id="comments"><br><br><br>
 
@@ -588,84 +605,118 @@
         <br><br>
 
 
+
+
+
+
+
+
+        <!-- +++++++ more blogs ++++++++++++++++++++++ -->
+
         {% if more_blogs %}
-        <div class="row-container blog-index" style="margin-bottom: 90px;">
-            <div class="row" style="margin-bottom: 50px;">
-                <div class="column-container">
-                    <div class="column">
-                        <h3 id="comments">Check Out These Related Posts</h3>
-                    </div>
-                </div>
-            </div>
+        <div class="row-container wide-width blog-index">
+
+            <h2 style="text-align: center; min-width: 100% !important;padding: 55px 0 20px;">More blogs related to "{{tag|lower}}"</h2>
+
             <div class="row three-column small-gutters">
                 {% for x in more_blogs %}
+                {% if x.title != title %}
                 <div class="column-container" onclick="location.href='{{x.link}}'">
-                    <div class="column card accent-teal cardd" style="padding: 0; overflow: hidden;">
+                    <div class="column card accent-teal cardd"
+                        style="padding: 0; overflow: hidden; height: 100%; border-radius: 20px;">
                         <article id="post-238402"
-                            class="entry article-card post-238402 post type-post status-publish format-standard has-post-thumbnail hentry category-best-website-tools category-design tag-best-graphic-design-software tag-best-tools tag-graphic-design tag-graphic-design-tool">
+                            class="entry article-card post-238402 post type-post status-publish format-standard has-post-thumbnail hentry category-best-website-tools category-design tag-best-graphic-design-software tag-best-tools tag-graphic-design tag-graphic-design-tool"
+                            style="height: 100%;position: relative; border-radius: 20px;">
                             <div class="post-thumbnail" style="width: 100%;">
-                                <a  style="width: 100%; " style="cursor: default;">
-                                    <img src="../../../media/{{x.thumbnail}}"  style="width: 100%; height: 253px; object-fit: cover;" height="253" width="450" alt="">
+                                <a style="width: 100%; " style="cursor: default;">
+                                    <img src="../../../media/{{x.thumbnail}}" style="width: 100%; height: 253px; object-fit: cover;"
+                                        height="253" width="450" alt="">
                                 </a>
                             </div>
-                            <h3 style="padding: 20px 26px;"><a href="{{x.link}}"
-                                    >{{x.title}}</a></h3>
-                            <p class="blog-meta" style="padding: 0 26px;"> 
+                            <h3 style="padding: 20px 26px;"><a href="{{x.link}}">{{x.title}}</a></h3>
+                            <p class="blog-meta" style="padding: 0 26px;">
                                 <span class="published updated" style="font-size: .9rem;">{{x.date}}</span> <br>
-                                <a href="{{x.tag_link}}" style="background: rgba(0, 128, 128, 0.174); padding: 5px 8px; border: 1px solid teal; border-radius: 5px; font-size: .8rem; margin-right: 8px;">
+                                <a href="{{x.tag_link}}"
+                                    style="background: rgba(0, 128, 128, 0.174); padding: 5px 8px; border: 1px solid teal; border-radius: 5px; font-size: .8rem; margin-right: 8px;">
                                     {{x.tag}}
-                                </a> 
-                                <span
-                                    class="comments-number"><a href="{{x.link}}" style="padding: 5px 8px; font-size: .8rem; ">
+                                </a>
+                                <span class="comments-number"><a href="{{x.link}}"
+                                        style="padding: 5px 8px; font-size: .8rem; ">
                                         {{x.comments}} comments
                                     </a>
                                 </span>
                             </p>
-                            <p style="padding: 0 26px;">
+                            <p style="padding: 0 26px 124px;">
                                 {{x.brief}}
                             </p>
-                            <a class="button tertiary-button" style="width: calc(100% - 52px); transform: translateX(26px); margin: 35px 0 45px; "
-                                href="{{x.link}}"
-                                class="viewfull">
+                            <a class="button tertiary-button"
+                                style="width: calc(100% - 52px); transform: translateX(26px); margin: 35px 0 45px; position: absolute; bottom: 0; "
+                                href="{{x.link}}" class="viewfull">
                                 View Full Post
                             </a>
                         </article>
                     </div>
                 </div>
+                {% endif %}
                 {% endfor %}
+
             </div>
         </div>
         {% endif %}
 
         
         {% if recents %}
-        <!-- recent posts card -->
-        <section>
-        
-            <div class="row-container wide-width blog-index">
-                <div class="row small-gutters">
-                    <div class="column-container">
-                        <div class="column card accent-teal" style="display: flex; flex-direction: row;">
-                        <div class="" style="padding: 20px 60px 20px 30px; display: flex; align-items: center;">
-                                <h4 style="text-align: center;">Recent Posts</h4>
+        <div class="row-container wide-width blog-index">
+
+            <h2 style="text-align: center; min-width: 100% !important;padding: 105px 0 20px;">Recent blogs</h2>
+
+            <div class="row three-column small-gutters">
+                {% for x in recents %}
+                {% if x.title != title %}
+                <div class="column-container" onclick="location.href='{{x.link}}'">
+                    <div class="column card accent-teal cardd"
+                        style="padding: 0; overflow: hidden; height: 100%; border-radius: 20px;">
+                        <article id="post-238402"
+                            class="entry article-card post-238402 post type-post status-publish format-standard has-post-thumbnail hentry category-best-website-tools category-design tag-best-graphic-design-software tag-best-tools tag-graphic-design tag-graphic-design-tool"
+                            style="height: 100%;position: relative; border-radius: 20px;">
+                            <div class="post-thumbnail" style="width: 100%;">
+                                <a style="width: 100%; " style="cursor: default;">
+                                    <img src="../../../media/{{x.thumbnail}}" style="width: 100%; height: 253px; object-fit: cover;"
+                                        height="253" width="450" alt="">
+                                </a>
                             </div>
-                            <div class="">
-                                <ul>
-                                    {% for x in recents %}
-                                    <li>
-                                        <a href="/blogs/{{x.link}}">{{x.title}}</a>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
+                            <h3 style="padding: 20px 26px;"><a href="{{x.link}}">{{x.title}}</a></h3>
+                            <p class="blog-meta" style="padding: 0 26px;">
+                                <span class="published updated" style="font-size: .9rem;">{{x.date}}</span> <br>
+                                <a href="{{x.tag_link}}"
+                                    style="background: rgba(0, 128, 128, 0.174); padding: 5px 8px; border: 1px solid teal; border-radius: 5px; font-size: .8rem; margin-right: 8px;">
+                                    {{x.tag}}
+                                </a>
+                                <span class="comments-number"><a href="{{x.link}}"
+                                        style="padding: 5px 8px; font-size: .8rem; ">
+                                        {{x.comments}} comments
+                                    </a>
+                                </span>
+                            </p>
+                            <p style="padding: 0 26px 124px;">
+                                {{x.brief}}
+                            </p>
+                            <a class="button tertiary-button"
+                                style="width: calc(100% - 52px); transform: translateX(26px); margin: 35px 0 45px; position: absolute; bottom: 0; "
+                                href="{{x.link}}" class="viewfull">
+                                View Full Post
+                            </a>
+                        </article>
                     </div>
                 </div>
+                {% endif %}
+                {% endfor %}
+
             </div>
-        </section>
+        </div>
         {% endif %}
 
-
+        <br><br>
     </section>
 
 

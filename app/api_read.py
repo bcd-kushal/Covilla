@@ -112,14 +112,32 @@ def get_recent_blog_titles():
     atlas_db = mongo_client.get_database("blogs")
     data = atlas_db.blog_brief
 
-    blogs = data.find({ "title": { "$exists": True } }).sort({ "_id": -1 }).limit(5)
+    blogs = data.find({ "title": { "$exists": True } }).sort({ "_id": -1 }).limit(3)
+
+
+
 
     recents = []
 
     for blog in blogs:
+
+        name = blog["title"]
+        if thumbnails.objects.filter(title=name).exists():
+                user = thumbnails.objects.filter(title=name).first()
+                print("\n\n------------------------ IMAGE IS ----------------------------    ",user.image)
+                blog["thumbnail"] = user.image
+
+
+
         recents.append({
             "title": blog["title"],
-            "link": blog["link"]
+            "thumbnail": blog["thumbnail"],
+            "tag": blog["tag"],
+            "tag_link": blog["tag_link"],
+            "date": blog["date"],
+            "comments": blog["comments"],
+            "link": blog["link"],
+            "brief": blog["brief"]
         })
     
     return recents
@@ -408,7 +426,7 @@ def get_more_blogs(tag):
     atlas_db = mongo_client.get_database("blogs")
     data = atlas_db.blog_brief
 
-    blogs = data.find({ "tag": tag })
+    blogs = data.find({ "tag": tag }).limit(6)
 
 
 
@@ -434,3 +452,28 @@ def get_more_blogs(tag):
 
 
     return more_blogs
+
+
+
+
+
+
+def get_blog_comments(blog:str=None):
+    if blog=="" or blog==None:
+        return None
+    
+    mongo_client = MongoClient(ATLAS_URI,server_api = ServerApi('1'))
+    
+    atlas_db = mongo_client.get_database("blogs")
+    data = atlas_db.comments
+
+    comments = data.find_one({ "title": { "$regex": re.compile( blog , re.IGNORECASE ) } })
+
+    print("\n\n",comments,"\n\n")
+
+    comments = comments["comments"]
+
+    if len(comments) == 0:
+        return []
+    else:
+        return comments

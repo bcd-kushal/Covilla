@@ -33,7 +33,7 @@ def blog(req,id):
         blog = get_whole_blog(id)
         
         return render(req,"src/blog.html",{
-            "tab_title": f"{blog['title']}: Covilla",
+            "tab_title": f"{blog['title']}: MyBlogs",
 
             # blog details
             "title": blog["title"],
@@ -41,7 +41,7 @@ def blog(req,id):
             "author": blog["author"],
             "thumbnail": blog["thumbnail"],
             "tag": blog["tag"],
-            "contents": blog["contents"],
+            
             "header": blog["header"],
             "body": blog["body"],
 
@@ -52,6 +52,9 @@ def blog(req,id):
 
             # recents
             "recents": get_recent_blog_titles(),
+
+            # comments
+            "comments": get_blog_comments(blog=id),
 
 
 
@@ -114,7 +117,7 @@ def blog(req,id):
 def homepage(req):
     if req.method == "GET":
         return render(req,"src/all_blogs.html",{
-            "tab_title": "Covilla: Home",
+            "tab_title": "MyBlogs: Home",
 
             "page_title": "All Blogs",
             "page_brief": "Stay up to date with the most recent news and updates of our team happenings",
@@ -149,7 +152,7 @@ def categories(req):
 def design_blogs(req):
     if req.method == "GET":
         return render(req,"src/all_blogs.html",{
-            "tab_title": "Design Blogs: Covilla",
+            "tab_title": "Design Blogs: MyBlogs",
 
             "page_title": "Design Blogs",
             "page_brief": "For the design-centric peeps out there",
@@ -168,7 +171,7 @@ def design_blogs(req):
 def tech_blogs(req):
     if req.method == "GET":
         return render(req,"src/all_blogs.html",{
-            "tab_title": "Tech Blogs: Covilla",
+            "tab_title": "Tech Blogs: MyBlogs",
 
             "page_title": "Technical Blogs",
             "page_brief": "Technology is the present, and future afterall",
@@ -187,7 +190,7 @@ def tech_blogs(req):
 def life_blogs(req):
     if req.method == "GET":
         return render(req,"src/all_blogs.html",{
-            "tab_title": "Life Blogs: Covilla",
+            "tab_title": "Life Blogs: MyBlogs",
 
             "page_title": "Life Blogs",
             "page_brief": "The daily happenings jotted down",
@@ -206,7 +209,7 @@ def life_blogs(req):
 def profession_blogs(req):
     if req.method == "GET":
         return render(req,"src/all_blogs.html",{
-            "tab_title": "Professional Blogs: Covilla",
+            "tab_title": "Professional Blogs: MyBlogs",
 
             "page_title": "Profession Blogs",
             "page_brief": "Staying stern and sharp on the work sector with blogs",
@@ -228,7 +231,7 @@ def profession_blogs(req):
 def daily_blogs(req):
     if req.method == "GET":
         return render(req,"src/all_blogs.html",{
-            "tab_title": "Daily Blogs: Covilla",
+            "tab_title": "Daily Blogs: MyBlogs",
 
             "page_title": "Daily Blogs",
             "page_brief": "A daily record into the life of us.",
@@ -250,7 +253,7 @@ def daily_blogs(req):
 def community_blogs(req):
     if req.method == "GET":
         return render(req,"src/all_blogs.html",{
-            "tab_title": "Community Blogs: Covilla",
+            "tab_title": "Community Blogs: MyBlogs",
 
             "page_title": "Community Blogs",
             "page_brief": "For the readers, by the readers, to the readers",
@@ -274,7 +277,7 @@ def community_blogs(req):
 def recents(req):
     if req.method == "GET":
         return render(req,"src/all_blogs.html",{
-            "tab_title": "Recent Blogs: Covilla",
+            "tab_title": "Recent Blogs: MyBlogs",
 
             "page_title": "Recent Blogs",
             "page_brief": "We add blogs on a weekly basis",
@@ -303,7 +306,7 @@ def search(req):
         total = len(blogs)
 
         return render(req,"src/all_blogs.html",{
-            "tab_title": "Search Results: Covilla",
+            "tab_title": "Search Results: MyBlogs",
 
             "page_title": f"Search results for '{keyword}'",
             "page_brief": f"Found a total of {total} related blogs",
