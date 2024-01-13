@@ -133,10 +133,9 @@ def publish_new_blog(obj:dict):
 
     author = "Kushal Kumar"
 
-    x = h2_titles(body)
+    # x = h2_titles(body)
 
-    contents = x["contents"]
-    body = x["modified_body"]
+    contents = []
 
 
     print(f"\n\n*******************************************\n\nblog={blog}\ntag={tag}\nthumbnail={thumbnail}\ntag_link={tag_link}\ndateRN={dateRN}\nblog_link={blog_link}\ncontents={contents}\nbody={body}")

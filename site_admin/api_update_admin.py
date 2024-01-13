@@ -189,10 +189,9 @@ def update_blog_body(blog:str, header:str, body:str):
         return False
     
 
-    mod = h2_titles(body)
+    # mod = h2_titles(body)
 
-    new_body = mod["modified_body"]
-    contents = mod["contents"]
+    contents = []
 
 
     mongo_client = MongoClient(ATLAS_URI,server_api = ServerApi('1'))
@@ -201,11 +200,11 @@ def update_blog_body(blog:str, header:str, body:str):
 
     # MAIN BLOG
     data = atlas_db.blog
-    result = data.update_many({ "title": blog }, { "$set": { "header": header, "body": new_body, "contents": contents } })
+    result = data.update_many({ "title": blog }, { "$set": { "header": header, "body": body, "contents": contents } })
 
 
     # BLOG BRIEF
-    short_brief = header[:150]
+    short_brief = header[:80]
 
     data = atlas_db.blog_brief
     result = data.update_one({ "title": blog }, { "$set": { "brief": short_brief } })

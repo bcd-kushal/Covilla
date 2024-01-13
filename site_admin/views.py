@@ -99,7 +99,7 @@ def redirect_to_dashboard(req):
 def dashboard(req):
     if req.method == "GET":
         return render(req,"src/admin_pages/dashboard.html",{
-            "tab_title": "Dashboard: Covilla Admin",
+            "tab_title": "Dashboard: MyBlogs Admin",
             "page_title": "Admin Dashboard",
             "page_brief": "Manage your blogs from here",
 
@@ -201,6 +201,9 @@ def create_blog_status(req):
         header = req.POST.get("blog_intro")
         body = req.POST.get("blog_body")
 
+
+
+
         result = publish_new_blog({
             "title": blog_title,
             "tag": tag,
@@ -210,7 +213,7 @@ def create_blog_status(req):
         })
         
         props = {
-                "tab_title": "Covilla Admin",
+                "tab_title": "MyBlogs Admin",
                 "title": "Blog could not be added",
                 "subtitle": "Server error, try again later",
                 "back_link": "/admin/create/create-new/",
@@ -222,7 +225,7 @@ def create_blog_status(req):
 
         if result:
             props = {
-                "tab_title": "Covilla Admin",
+                "tab_title": "MyBlogs Admin",
                 "title": "Blog created!",
                 "subtitle": "A new blog, a new read!",
                 "back_link": "/admin/dashboard/",
@@ -245,7 +248,7 @@ def create_blog_status(req):
 def edit_page(req):
     if req.method == "GET":
         return render(req,"src/admin_pages/select.html",{
-            "tab_title": "Edit Blog: Covilla Admin",
+            "tab_title": "Edit Blog: MyBlogs Admin",
             "page_title": "Select a blog to edit",
             "page_brief": "Edited blogs will reflect on your page in 1-2 minutes",
 
@@ -358,7 +361,7 @@ def edit_header_status(req):
 
         
         props = {
-                "tab_title": "Covilla Admin",
+                "tab_title": "MyBlogs Admin",
                 "title": "Could not update",
                 "subtitle": "Server error, try again later",
                 "back_link": "/admin/edit/",
@@ -371,7 +374,7 @@ def edit_header_status(req):
 
         if result1 & result2:
             props = {
-                "tab_title": "Covilla Admin",
+                "tab_title": "MyBlogs Admin",
                 "title": "Header updated successfully",
                 "subtitle": "Headers are afterall, valuable at the forefront itself",
                 "back_link": "/admin/dashboard/",
@@ -402,8 +405,8 @@ def edit_body(req):
 
         return render(req,"src/admin_pages/blog_content/body.html",{
             "blog_title": blog,
-            "intro": result["header"],
-            "body": result["body"],
+            "intro": result["header"].replace('"', "'"),
+            "body": result["body"].replace('"', "'"),
             "admin": True
         })
     else: 
@@ -422,15 +425,12 @@ def edit_body_status(req):
         header = req.POST.get("blog_intro")
         body = req.POST.get("blog_body")
 
-        header = re.sub(r'<h2[^>]*>.*?</h2>', '<h2></h2>', header, flags=re.DOTALL)
-        body = re.sub(r'<h2[^>]*>.*?</h2>', '<h2></h2>', body, flags=re.DOTALL)
-
         result = update_blog_body(blog=blog,header=header,body=body)
 
         print(f"\n\n=======> BLOG: {blog}\n\n=======> HEADER: {header}\n\n=======> BODY: {body} ")
         
         props = {
-                "tab_title": "Covilla Admin",
+                "tab_title": "MyBlogs Admin",
                 "title": "Could not update",
                 "subtitle": "Server error, try again later",
                 "back_link": "/admin/edit/",
@@ -443,7 +443,7 @@ def edit_body_status(req):
 
         if result:
             props = {
-                "tab_title": "Covilla Admin",
+                "tab_title": "MyBlogs Admin",
                 "title": "Body updated successfully",
                 "subtitle": "Body makes the meat of the blog, its importatnt to keep it sparkly",
                 "back_link": "/admin/dashboard/",
@@ -470,7 +470,7 @@ def edit_body_status(req):
 def delete_page(req):
     if req.method == "GET":
         return render(req,"src/admin_pages/select.html",{
-            "tab_title": "Delete Blog: Covilla Admin",
+            "tab_title": "Delete Blog: MyBlogs Admin",
             "page_title": "Select a blog to delete",
             "page_brief": "Deleted blogs will reflect on your page in 1-2 minutes",
 
@@ -513,7 +513,7 @@ def blog_delete(req):
         result = delete_blog(blog)
 
         props = {
-                "tab_title": "Covilla Admin",
+                "tab_title": "MyBlogs Admin",
                 "title": "Deletion unsuccessful",
                 "subtitle": "Server error, try again later",
                 "back_link": "/admin/delete/",
@@ -526,7 +526,7 @@ def blog_delete(req):
 
         if result:
             props = {
-                "tab_title": "Covilla Admin",
+                "tab_title": "MyBlogs Admin",
                 "title": "Deleted successfully",
                 "subtitle": "There's no concept of trash bin here as we don't believe in trash items",
                 "back_link": "/admin/dashboard/",
@@ -552,7 +552,7 @@ def blog_delete(req):
 def comment_page(req):
     if req.method == "GET":
         return render(req,"src/admin_pages/select.html",{
-            "tab_title": "See Comments: Covilla Admin",
+            "tab_title": "See Comments: MyBlogs Admin",
             "page_title": "Select a blog to show its comments",
             "page_brief": "Comments are essential for the growth of any blog afterall",
 
@@ -621,7 +621,7 @@ def comment_delete(req):
 
 
         props = {
-                "tab_title": "Covilla Admin",
+                "tab_title": "MyBlogs Admin",
                 "title": "Comment could not be deleted",
                 "subtitle": "Server error, try again later",
                 "back_link": "/admin/comments/",
@@ -633,7 +633,7 @@ def comment_delete(req):
 
         if result:
             props = {
-                "tab_title": "Covilla Admin",
+                "tab_title": "MyBlogs Admin",
                 "title": "Comment deleted",
                 "subtitle": "More comments will be added in future, no worries",
                 "back_link": "/admin/dashboard/",
