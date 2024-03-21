@@ -16,10 +16,11 @@ https://blogs.kushalkumarsaha.com
 
 <hr>
 
-## :book: License
+## ⚖️ License
 
 This project is licensed under the MIT License - see the <a href=''>LICENSE</a> file for details.
 
 <hr>
 
-© 2024 dev-kushalkumar
+
+<h3><img title="Kushal-Kumar" width="17" src="https://github.com/bcd-kushal/bcd-kushal/blob/main/icons/dark/filled/kushalkumar_bg_dark.png"/>&nbsp;Kushal Kumar 2024 • All rights reserved </h3>
