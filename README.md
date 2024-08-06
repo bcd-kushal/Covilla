@@ -7,8 +7,6 @@
 <img style="height:25px;" src="https://user-images.githubusercontent.com/25181517/182884177-d48a8579-2cd0-447a-b9a6-ffc7cb02560e.png"/> &nbsp;
 <img style="height:25px" src="https://user-images.githubusercontent.com/25181517/117207330-263ba280-adf4-11eb-9b97-0ac5b40bc3be.png"/> &nbsp;
 
-https://blogs.kushalkumarsaha.com
-
 `Covilla` is a blogging website to host your blogs and manage them
 
 - comes with commenting and admin features
